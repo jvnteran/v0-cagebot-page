@@ -2,7 +2,6 @@ import { Navigation } from "@/components/navigation"
 import { Footer } from "@/components/footer"
 import Link from "next/link"
 import { Target, TrendingUp, Clock, Flame, Award, CheckCircle, AlertCircle, XCircle } from 'lucide-react'
-import { MetricCard } from "@/components/metric-card"
 import { FeaturedFightCard } from "@/components/featured-fight-card"
 import { PredictionCard } from "@/components/prediction-card"
 
@@ -20,7 +19,7 @@ export default function Home() {
           <div className="flex items-center justify-center gap-2 mb-8">
             <div className="flex items-center gap-2 px-4 py-2 bg-accent/10 border border-accent/20 rounded-full">
               <div className="w-2 h-2 rounded-full bg-accent animate-pulse" />
-              <span className="text-accent text-sm font-medium">Model is actively analyzing 3 upcoming events</span>
+              <span className="text-accent text-sm font-medium">Model is actively analyzing upcoming event: UFC Fight Night Qatar: Tsarukyan vs Hooker</span>
             </div>
           </div>
 
@@ -33,7 +32,6 @@ export default function Home() {
                 </svg>
               </div>
               <span className="text-2xl font-bold text-foreground tracking-tight">Cagebot</span>
-              <span className="text-accent text-sm font-semibold">76.9% Accuracy</span>
             </div>
             <h1 className="text-5xl lg:text-7xl font-bold mb-6 text-foreground leading-tight">
               UFC Fight Predictions<br/>Powered by Machine Learning
@@ -62,10 +60,57 @@ export default function Home() {
 
             {/* Metrics Row */}
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-12">
-              <MetricCard label="Model Accuracy (Current Month)" value="76%" delta="+2.1% this month" deltaPositive={true} />
-              <MetricCard label="Brier Score" value="0.178" />
-              <MetricCard label="Total Predictions" value="1,247" />
-              <MetricCard label="ROI" value="+4.2%" delta="+0.8%" deltaPositive={true} />
+              {/* Model Accuracy */}
+              <div className="bg-card/50 backdrop-blur border border-border rounded-2xl p-6 hover:border-accent/30 transition-all group">
+                <div className="flex items-center justify-between mb-4">
+                  <span className="text-xs text-muted-foreground uppercase tracking-wide">Model Accuracy</span>
+                  <div className="w-10 h-10 rounded-xl bg-accent/10 flex items-center justify-center group-hover:bg-accent/20 transition-colors">
+                    <CheckCircle className="w-5 h-5 text-accent" />
+                  </div>
+                </div>
+                <div className="text-4xl font-bold text-foreground mb-2">76.9%</div>
+                <div className="text-sm text-muted-foreground">Historical win rate</div>
+                <div className="text-xs text-accent mt-2">↑ +2.1% this month</div>
+              </div>
+
+              {/* Brier Score */}
+              <div className="bg-card/50 backdrop-blur border border-border rounded-2xl p-6 hover:border-accent/30 transition-all group">
+                <div className="flex items-center justify-between mb-4">
+                  <span className="text-xs text-muted-foreground uppercase tracking-wide">Brier Score</span>
+                  <div className="w-10 h-10 rounded-xl bg-accent/10 flex items-center justify-center group-hover:bg-accent/20 transition-colors">
+                    <TrendingUp className="w-5 h-5 text-accent" />
+                  </div>
+                </div>
+                <div className="text-4xl font-bold text-foreground mb-2">0.178</div>
+                <div className="text-sm text-muted-foreground">Calibration metric</div>
+              </div>
+
+              {/* Total Predictions */}
+              <div className="bg-card/50 backdrop-blur border border-border rounded-2xl p-6 hover:border-accent/30 transition-all group">
+                <div className="flex items-center justify-between mb-4">
+                  <span className="text-xs text-muted-foreground uppercase tracking-wide">Total Predictions</span>
+                  <div className="w-10 h-10 rounded-xl bg-accent/10 flex items-center justify-center group-hover:bg-accent/20 transition-colors">
+                    <Target className="w-5 h-5 text-accent" />
+                  </div>
+                </div>
+                <div className="text-4xl font-bold text-foreground mb-2">1,247</div>
+                <div className="text-sm text-muted-foreground">All events</div>
+              </div>
+
+              {/* ROI */}
+              <div className="bg-card/50 backdrop-blur border border-border rounded-2xl p-6 hover:border-accent/30 transition-all group">
+                <div className="flex items-center justify-between mb-4">
+                  <span className="text-xs text-muted-foreground uppercase tracking-wide">ROI</span>
+                  <div className="w-10 h-10 rounded-xl bg-accent/10 flex items-center justify-center group-hover:bg-accent/20 transition-colors">
+                    <svg className="w-5 h-5 text-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 12l3-3 3 3 4-4M8 21l4-4 4 4M3 4h18M4 4h16v12a1 1 0 01-1 1H5a1 1 0 01-1-1V4z" />
+                    </svg>
+                  </div>
+                </div>
+                <div className="text-4xl font-bold text-foreground mb-2">+4.2%</div>
+                <div className="text-sm text-muted-foreground">Betting returns</div>
+                <div className="text-xs text-accent mt-2">↑ +0.8%</div>
+              </div>
             </div>
 
             {/* CTA Buttons */}
