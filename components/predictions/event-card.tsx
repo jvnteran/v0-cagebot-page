@@ -1,12 +1,12 @@
 "use client"
 
-import { Calendar, MapPin, TrendingUp } from 'lucide-react'
+import { Calendar, MapPin, TrendingUp } from "lucide-react"
 import Image from "next/image"
 import { UFCFightCard } from "./ufc-fight-card"
-import type { Event } from "@/data/events"
+import type { EventWithFights } from "@/lib/types/schema"
 
 interface EventCardProps {
-  event: Event
+  event: EventWithFights
 }
 
 export function EventCard({ event }: EventCardProps) {
@@ -19,8 +19,13 @@ export function EventCard({ event }: EventCardProps) {
   })
 
   const totalFights = event.fights.length
-  const avgConfidence = (event.fights.reduce((sum, fight) => sum + fight.confidence, 0) / totalFights).toFixed(1)
-  const highConfidencePicks = event.fights.filter(f => f.confidence >= 65).length
+  const picks = event.fights
+    .map((fight) => fight.picks?.[0])
+    .filter((pick): pick is NonNullable<typeof pick> => Boolean(pick && pick.confidence_percentage !== null))
+  const avgConfidence = picks.length
+    ? (picks.reduce((sum, pick) => sum + (pick.confidence_percentage ?? 0), 0) / picks.length).toFixed(1)
+    : "0.0"
+  const highConfidencePicks = picks.filter((pick) => (pick.confidence_percentage ?? 0) >= 65).length
 
   return (
     <div className="space-y-8">
@@ -28,7 +33,7 @@ export function EventCard({ event }: EventCardProps) {
       <div className="card-elevated overflow-hidden">
         <div className="relative h-64 w-full bg-gradient-to-br from-secondary/50 to-secondary/20">
           <Image
-            src={event.poster || "/placeholder.svg?height=256&width=1200"}
+            src={event.poster_url || "/placeholder.svg?height=256&width=1200"}
             alt={`${event.name} poster`}
             fill
             className="object-cover opacity-80"
