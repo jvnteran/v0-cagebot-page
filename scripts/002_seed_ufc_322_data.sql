@@ -40,7 +40,7 @@ SET
 -- Insert UFC 322 Event
 INSERT INTO public.events (id, name, location, date, poster_url, status)
 VALUES (
-  'e1a1b2c3-d4e5-6f7g-8h9i-0j1k2l3m4n5o',
+  'e1a1b2c3-d4e5-6f7a-8b9c-0d1e2f3a4b5c',
   'UFC 322: Della Maddalena vs. Burns',
   'Perth Arena, Perth, Australia',
   '2025-02-08 22:00:00+00',
@@ -59,8 +59,8 @@ SET
 -- Fight 1: Della Maddalena vs Burns
 INSERT INTO public.fights (id, event_id, fighter_a_id, fighter_a_name, fighter_a_odds, fighter_b_id, fighter_b_name, fighter_b_odds, weight_class, is_main_event, fight_order)
 VALUES (
-  'f1a1b2c3-d4e5-6f7g-8h9i-0j1k2l3m4n5o',
-  'e1a1b2c3-d4e5-6f7g-8h9i-0j1k2l3m4n5o',
+  'f1a1b2c3-d4e5-6f7a-8b9c-1d2e3f4a5b6c',
+  'e1a1b2c3-d4e5-6f7a-8b9c-0d1e2f3a4b5c',
   '11111111-1111-1111-1111-111111111111',
   'Jack Della Maddalena',
   -145,
@@ -100,8 +100,8 @@ INSERT INTO public.picks (
   analysis
 )
 VALUES (
-  'f1a1b2c3-d4e5-6f7g-8h9i-0j1k2l3m4n5o',
-  'e1a1b2c3-d4e5-6f7g-8h9i-0j1k2l3m4n5o',
+  'f1a1b2c3-d4e5-6f7a-8b9c-1d2e3f4a5b6c',
+  'e1a1b2c3-d4e5-6f7a-8b9c-0d1e2f3a4b5c',
   '0aa0bb00-ccdd-4eee-9000-aaaaaaaaaaaa',
   'Jack Della Maddalena',
   'high',
@@ -119,8 +119,8 @@ VALUES (
 -- Fight 2: Leon Edwards vs Belal Muhammad
 INSERT INTO public.fights (id, event_id, fighter_a_id, fighter_a_name, fighter_a_odds, fighter_b_id, fighter_b_name, fighter_b_odds, weight_class, fight_order)
 VALUES (
-  'f2a1b2c3-d4e5-6f7g-8h9i-0j1k2l3m4n5o',
-  'e1a1b2c3-d4e5-6f7g-8h9i-0j1k2l3m4n5o',
+  'f2a1b2c3-d4e5-6f7a-8b9c-2d3e4f5a6b7c',
+  'e1a1b2c3-d4e5-6f7a-8b9c-0d1e2f3a4b5c',
   '33333333-3333-3333-3333-333333333333',
   'Leon Edwards',
   -110,
@@ -158,8 +158,8 @@ INSERT INTO public.picks (
   analysis
 )
 VALUES (
-  'f2a1b2c3-d4e5-6f7g-8h9i-0j1k2l3m4n5o',
-  'e1a1b2c3-d4e5-6f7g-8h9i-0j1k2l3m4n5o',
+  'f2a1b2c3-d4e5-6f7a-8b9c-2d3e4f5a6b7c',
+  'e1a1b2c3-d4e5-6f7a-8b9c-0d1e2f3a4b5c',
   '0aa0bb00-ccdd-4eee-9000-aaaaaaaaaaaa',
   'Leon Edwards',
   'medium',
@@ -177,8 +177,8 @@ VALUES (
 -- Fight 3: Alexandre Pantoja vs Steve Erceg
 INSERT INTO public.fights (id, event_id, fighter_a_id, fighter_a_name, fighter_a_odds, fighter_b_id, fighter_b_name, fighter_b_odds, weight_class, fight_order)
 VALUES (
-  'f3a1b2c3-d4e5-6f7g-8h9i-0j1k2l3m4n5o',
-  'e1a1b2c3-d4e5-6f7g-8h9i-0j1k2l3m4n5o',
+  'f3a1b2c3-d4e5-6f7a-8b9c-3d4e5f6a7b8c',
+  'e1a1b2c3-d4e5-6f7a-8b9c-0d1e2f3a4b5c',
   '55555555-5555-5555-5555-555555555555',
   'Alexandre Pantoja',
   -135,
@@ -216,8 +216,8 @@ INSERT INTO public.picks (
   analysis
 )
 VALUES (
-  'f3a1b2c3-d4e5-6f7g-8h9i-0j1k2l3m4n5o',
-  'e1a1b2c3-d4e5-6f7g-8h9i-0j1k2l3m4n5o',
+  'f3a1b2c3-d4e5-6f7a-8b9c-3d4e5f6a7b8c',
+  'e1a1b2c3-d4e5-6f7a-8b9c-0d1e2f3a4b5c',
   '0aa0bb00-ccdd-4eee-9000-aaaaaaaaaaaa',
   'Alexandre Pantoja',
   'high',
@@ -235,8 +235,8 @@ VALUES (
 -- Fight 4: Kai Kara-France vs Manel Kape
 INSERT INTO public.fights (id, event_id, fighter_a_id, fighter_a_name, fighter_a_odds, fighter_b_id, fighter_b_name, fighter_b_odds, weight_class, fight_order)
 VALUES (
-  'f4a1b2c3-d4e5-6f7g-8h9i-0j1k2l3m4n5o',
-  'e1a1b2c3-d4e5-6f7g-8h9i-0j1k2l3m4n5o',
+  'f4a1b2c3-d4e5-6f7a-8b9c-4d5e6f7a8b9c',
+  'e1a1b2c3-d4e5-6f7a-8b9c-0d1e2f3a4b5c',
   '77777777-7777-7777-7777-777777777777',
   'Kai Kara-France',
   -140,
@@ -274,8 +274,8 @@ INSERT INTO public.picks (
   analysis
 )
 VALUES (
-  'f4a1b2c3-d4e5-6f7g-8h9i-0j1k2l3m4n5o',
-  'e1a1b2c3-d4e5-6f7g-8h9i-0j1k2l3m4n5o',
+  'f4a1b2c3-d4e5-6f7a-8b9c-4d5e6f7a8b9c',
+  'e1a1b2c3-d4e5-6f7a-8b9c-0d1e2f3a4b5c',
   '0aa0bb00-ccdd-4eee-9000-aaaaaaaaaaaa',
   'Kai Kara-France',
   'medium',
@@ -293,8 +293,8 @@ VALUES (
 -- Fight 5: Dan Hooker vs Mateusz Gamrot
 INSERT INTO public.fights (id, event_id, fighter_a_id, fighter_a_name, fighter_a_odds, fighter_b_id, fighter_b_name, fighter_b_odds, weight_class, fight_order)
 VALUES (
-  'f5a1b2c3-d4e5-6f7g-8h9i-0j1k2l3m4n5o',
-  'e1a1b2c3-d4e5-6f7g-8h9i-0j1k2l3m4n5o',
+  'f5a1b2c3-d4e5-6f7a-8b9c-5d6e7f8a9b0c',
+  'e1a1b2c3-d4e5-6f7a-8b9c-0d1e2f3a4b5c',
   '99999999-9999-9999-9999-999999999999',
   'Dan Hooker',
   130,
@@ -332,8 +332,8 @@ INSERT INTO public.picks (
   analysis
 )
 VALUES (
-  'f5a1b2c3-d4e5-6f7g-8h9i-0j1k2l3m4n5o',
-  'e1a1b2c3-d4e5-6f7g-8h9i-0j1k2l3m4n5o',
+  'f5a1b2c3-d4e5-6f7a-8b9c-5d6e7f8a9b0c',
+  'e1a1b2c3-d4e5-6f7a-8b9c-0d1e2f3a4b5c',
   '0aa0bb00-ccdd-4eee-9000-aaaaaaaaaaaa',
   'Mateusz Gamrot',
   'high',
@@ -351,9 +351,9 @@ VALUES (
 -- Optional odds history snapshots for transparency
 INSERT INTO public.odds_history (fight_id, sportsbook, fighter_a_decimal_odds, fighter_b_decimal_odds, captured_at)
 VALUES
-  ('f1a1b2c3-d4e5-6f7g-8h9i-0j1k2l3m4n5o', 'DraftKings', 1.72, 2.15, '2024-12-01 15:00:00+00'),
-  ('f1a1b2c3-d4e5-6f7g-8h9i-0j1k2l3m4n5o', 'FanDuel', 1.70, 2.20, '2024-12-03 15:00:00+00'),
-  ('f2a1b2c3-d4e5-6f7g-8h9i-0j1k2l3m4n5o', 'DraftKings', 1.95, 1.95, '2024-12-02 15:00:00+00');
+  ('f1a1b2c3-d4e5-6f7a-8b9c-1d2e3f4a5b6c', 'DraftKings', 1.72, 2.15, '2024-12-01 15:00:00+00'),
+  ('f1a1b2c3-d4e5-6f7a-8b9c-1d2e3f4a5b6c', 'FanDuel', 1.70, 2.20, '2024-12-03 15:00:00+00'),
+  ('f2a1b2c3-d4e5-6f7a-8b9c-2d3e4f5a6b7c', 'DraftKings', 1.95, 1.95, '2024-12-02 15:00:00+00');
 
 -- Example official results that include model pick outcomes for CSV parity
 INSERT INTO public.results (
@@ -376,8 +376,8 @@ INSERT INTO public.results (
 )
 VALUES
   (
-    'f1a1b2c3-d4e5-6f7g-8h9i-0j1k2l3m4n5o',
-    'e1a1b2c3-d4e5-6f7g-8h9i-0j1k2l3m4n5o',
+    'f1a1b2c3-d4e5-6f7a-8b9c-1d2e3f4a5b6c',
+    'e1a1b2c3-d4e5-6f7a-8b9c-0d1e2f3a4b5c',
     'Jack Della Maddalena',
     'Gilbert Burns',
     'A',
@@ -394,8 +394,8 @@ VALUES
     'Model called the stoppage with a high-confidence tag'
   ),
   (
-    'f2a1b2c3-d4e5-6f7g-8h9i-0j1k2l3m4n5o',
-    'e1a1b2c3-d4e5-6f7g-8h9i-0j1k2l3m4n5o',
+    'f2a1b2c3-d4e5-6f7a-8b9c-2d3e4f5a6b7c',
+    'e1a1b2c3-d4e5-6f7a-8b9c-0d1e2f3a4b5c',
     'Belal Muhammad',
     'Leon Edwards',
     'B',
