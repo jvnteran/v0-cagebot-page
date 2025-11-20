@@ -34,10 +34,17 @@ export default async function PredictionsPage() {
     console.log(`[v0] Event ${idx + 1}: ${event.name} - ${event.fights?.length || 0} fights`)
   })
 
-  const filteredEvents = events?.filter((event) => event.name.includes("UFC 322")) || []
+  const filteredEvents =
+    events
+      ?.filter((event) => event.name.includes("UFC 322"))
+      .map((event) => ({
+        ...event,
+        fights: event.fights?.sort((a, b) => (a.fight_order || 0) - (b.fight_order || 0)).slice(0, 14), // Only show first 14 fights
+      })) || []
+
   console.log("[v0] Filtered to UFC 322:", filteredEvents.length, "event(s)")
   if (filteredEvents.length > 0) {
-    console.log("[v0] UFC 322 fight count:", filteredEvents[0].fights?.length || 0)
+    console.log("[v0] UFC 322 fight count (limited to 14):", filteredEvents[0].fights?.length || 0)
   }
 
   return (
