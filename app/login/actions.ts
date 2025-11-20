@@ -24,13 +24,20 @@ export async function signInWithEmailOrUsername(emailOrUsername: string, passwor
         .eq("username", emailOrUsername)
         .single()
 
-      if (lookupError || !userData) {
-        throw new Error("Username not found")
+      // If username found, use that email
+      if (userData?.email) {
+        const { data, error } = await supabase.auth.signInWithPassword({
+          email: userData.email,
+          password,
+        })
+
+        if (error) throw error
+        return { success: true, data }
       }
 
-      // Sign in with the found email
+      // Fallback: if username not found, try the input as email (for legacy users)
       const { data, error } = await supabase.auth.signInWithPassword({
-        email: userData.email,
+        email: emailOrUsername,
         password,
       })
 
