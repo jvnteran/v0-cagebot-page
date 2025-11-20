@@ -1,76 +1,33 @@
 "use client"
 
-import { useState } from "react"
-import { useRouter } from 'next/navigation'
-import Link from "next/link"
-import { Navigation } from "@/components/navigation"
-import { Footer } from "@/components/footer"
+import { useState } from 'react'
+import Link from 'next/link'
+import { Navigation } from '@/components/navigation'
+import { Footer } from '@/components/footer'
 import { Mail, Lock, User, ArrowRight, UserCircle } from 'lucide-react'
-import { createClient } from "@/lib/supabase/client"
+import { signUp } from './actions'
+import { createClient } from '@/lib/supabase/client'
 
 export default function SignupPage() {
-  const router = useRouter()
-  const [username, setUsername] = useState("")
-  const [firstName, setFirstName] = useState("")
-  const [lastName, setLastName] = useState("")
-  const [email, setEmail] = useState("")
-  const [password, setPassword] = useState("")
-  const [confirmPassword, setConfirmPassword] = useState("")
   const [isLoading, setIsLoading] = useState(false)
-  const [error, setError] = useState("")
+  const [error, setError] = useState('')
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    setError("")
-
-    if (!username || username.length < 3) {
-      setError("Username must be at least 3 characters")
-      return
-    }
-
-    if (!firstName || !lastName) {
-      setError("Please enter your first and last name")
-      return
-    }
-
-    if (password !== confirmPassword) {
-      setError("Passwords do not match")
-      return
-    }
-
-    if (password.length < 8) {
-      setError("Password must be at least 8 characters")
-      return
-    }
-
+    setError('')
     setIsLoading(true)
 
     try {
-      const supabase = createClient()
-      const { data, error: signUpError } = await supabase.auth.signUp({
-        email,
-        password,
-        options: {
-          emailRedirectTo: process.env.NEXT_PUBLIC_DEV_SUPABASE_REDIRECT_URL || `${window.location.origin}/predictions`,
-          data: {
-            username: username,
-            first_name: firstName,
-            last_name: lastName,
-            full_name: `${firstName} ${lastName}`,
-          }
-        }
-      })
-
-      if (signUpError) throw signUpError
-
-      if (data?.user && !data?.session) {
-        router.push("/auth/signup-success")
-      } else {
-        router.push("/predictions")
+      const formData = new FormData(e.currentTarget)
+      const result = await signUp(formData)
+      
+      if (result?.error) {
+        setError(result.error)
+        setIsLoading(false)
       }
+      // Success case redirects automatically via the server action
     } catch (err: any) {
-      setError(err.message || "Failed to create account. Please try again.")
-    } finally {
+      setError(err.message || 'Failed to create account. Please try again.')
       setIsLoading(false)
     }
   }
@@ -152,8 +109,7 @@ export default function SignupPage() {
                   <UserCircle className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-muted-foreground" />
                   <input
                     type="text"
-                    value={username}
-                    onChange={(e) => setUsername(e.target.value)}
+                    name="username"
                     placeholder="johndoe"
                     className="w-full pl-10 pr-4 py-3 bg-background border gh-border rounded-lg text-foreground placeholder-muted-foreground focus:outline-none focus:border-accent focus:ring-1 focus:ring-accent"
                     required
@@ -168,8 +124,7 @@ export default function SignupPage() {
                     <User className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-muted-foreground" />
                     <input
                       type="text"
-                      value={firstName}
-                      onChange={(e) => setFirstName(e.target.value)}
+                      name="firstName"
                       placeholder="John"
                       className="w-full pl-10 pr-4 py-3 bg-background border gh-border rounded-lg text-foreground placeholder-muted-foreground focus:outline-none focus:border-accent focus:ring-1 focus:ring-accent"
                       required
@@ -183,8 +138,7 @@ export default function SignupPage() {
                     <User className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-muted-foreground" />
                     <input
                       type="text"
-                      value={lastName}
-                      onChange={(e) => setLastName(e.target.value)}
+                      name="lastName"
                       placeholder="Doe"
                       className="w-full pl-10 pr-4 py-3 bg-background border gh-border rounded-lg text-foreground placeholder-muted-foreground focus:outline-none focus:border-accent focus:ring-1 focus:ring-accent"
                       required
@@ -199,8 +153,7 @@ export default function SignupPage() {
                   <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-muted-foreground" />
                   <input
                     type="email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
+                    name="email"
                     placeholder="you@example.com"
                     className="w-full pl-10 pr-4 py-3 bg-background border gh-border rounded-lg text-foreground placeholder-muted-foreground focus:outline-none focus:border-accent focus:ring-1 focus:ring-accent"
                     required
@@ -214,8 +167,7 @@ export default function SignupPage() {
                   <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-muted-foreground" />
                   <input
                     type="password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
+                    name="password"
                     placeholder="••••••••"
                     className="w-full pl-10 pr-4 py-3 bg-background border gh-border rounded-lg text-foreground placeholder-muted-foreground focus:outline-none focus:border-accent focus:ring-1 focus:ring-accent"
                     required
@@ -229,8 +181,7 @@ export default function SignupPage() {
                   <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-muted-foreground" />
                   <input
                     type="password"
-                    value={confirmPassword}
-                    onChange={(e) => setConfirmPassword(e.target.value)}
+                    name="confirmPassword"
                     placeholder="••••••••"
                     className="w-full pl-10 pr-4 py-3 bg-background border gh-border rounded-lg text-foreground placeholder-muted-foreground focus:outline-none focus:border-accent focus:ring-1 focus:ring-accent"
                     required
@@ -245,14 +196,14 @@ export default function SignupPage() {
                 disabled={isLoading}
                 className="w-full py-3 bg-accent text-background font-semibold rounded-lg hover:opacity-90 transition-opacity disabled:opacity-50 flex items-center justify-center gap-2"
               >
-                {isLoading ? "Creating account..." : "Create Account"}
+                {isLoading ? 'Creating account...' : 'Create Account'}
                 {!isLoading && <ArrowRight className="w-4 h-4" />}
               </button>
             </form>
 
             <div className="mt-6 text-center">
               <p className="text-muted-foreground text-sm">
-                Already have an account?{" "}
+                Already have an account?{' '}
                 <Link href="/login" className="text-accent hover:underline font-medium">
                   Sign in
                 </Link>
