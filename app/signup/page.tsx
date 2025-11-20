@@ -17,21 +17,35 @@ export default function SignupPage() {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
+    console.log("[v0] Form submitted") // Added debug log
     setError("")
     setSuccess(false)
     setIsLoading(true)
 
     try {
       const formData = new FormData(e.currentTarget)
+      console.log("[v0] FormData created:", {
+        // Added debug log
+        username: formData.get("username"),
+        firstName: formData.get("firstName"),
+        lastName: formData.get("lastName"),
+        email: formData.get("email"),
+        hasPassword: !!formData.get("password"),
+      })
+
+      console.log("[v0] Calling signUp action...") // Added debug log
       const result = await signUp(formData)
+      console.log("[v0] signUp action returned:", result) // Added debug log
 
       if (result?.error) {
+        console.log("[v0] Signup error:", result.error) // Added debug log
         setError(result.error)
       } else if (result?.success) {
+        console.log("[v0] Signup successful!") // Added debug log
         setSuccess(true)
       }
     } catch (err: any) {
-      console.log("[v0] Signup error:", err)
+      console.log("[v0] Signup exception:", err) // Added debug log
       setError(err.message || "Failed to create account. Please try again.")
     } finally {
       setIsLoading(false)
