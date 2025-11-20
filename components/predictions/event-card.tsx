@@ -27,6 +27,9 @@ export function EventCard({ event }: EventCardProps) {
     : "0.0"
   const highConfidencePicks = picks.filter((pick) => (pick.confidence_percentage ?? 0) >= 65).length
 
+  const mainCardFights = event.fights.slice(0, 5)
+  const prelimFights = event.fights.slice(5)
+
   return (
     <div className="space-y-8">
       {/* Event Header with Poster */}
@@ -39,7 +42,7 @@ export function EventCard({ event }: EventCardProps) {
             className="object-cover opacity-80"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-card via-card/50 to-transparent" />
-          
+
           <div className="absolute bottom-0 left-0 right-0 p-6">
             <h2 className="text-4xl font-bold text-foreground mb-3 drop-shadow-lg">{event.name}</h2>
             <div className="flex items-center gap-6 text-sm text-muted-foreground">
@@ -78,12 +81,33 @@ export function EventCard({ event }: EventCardProps) {
         </div>
       </div>
 
-      {/* Fights */}
-      <div className="space-y-6">
-        {event.fights.map((fight, index) => (
-          <UFCFightCard key={fight.id} fight={fight} fightNumber={index + 1} />
-        ))}
-      </div>
+      {/* Main Card Section */}
+      {mainCardFights.length > 0 && (
+        <div className="space-y-6">
+          <div className="flex items-center gap-3">
+            <div className="h-px flex-1 bg-gradient-to-r from-transparent via-accent to-transparent" />
+            <h3 className="text-xl font-bold text-accent uppercase tracking-wider">Main Card</h3>
+            <div className="h-px flex-1 bg-gradient-to-r from-accent via-transparent to-transparent" />
+          </div>
+          {mainCardFights.map((fight, index) => (
+            <UFCFightCard key={fight.id} fight={fight} fightNumber={index + 1} />
+          ))}
+        </div>
+      )}
+
+      {/* Prelims Section */}
+      {prelimFights.length > 0 && (
+        <div className="space-y-6">
+          <div className="flex items-center gap-3">
+            <div className="h-px flex-1 bg-gradient-to-r from-transparent via-muted to-transparent" />
+            <h3 className="text-xl font-bold text-muted-foreground uppercase tracking-wider">Prelims</h3>
+            <div className="h-px flex-1 bg-gradient-to-r from-muted via-transparent to-transparent" />
+          </div>
+          {prelimFights.map((fight, index) => (
+            <UFCFightCard key={fight.id} fight={fight} fightNumber={mainCardFights.length + index + 1} />
+          ))}
+        </div>
+      )}
     </div>
   )
 }

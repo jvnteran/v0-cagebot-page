@@ -1,8 +1,8 @@
 "use client"
 
 import Link from "next/link"
-import { usePathname, useRouter } from 'next/navigation'
-import { Menu, LogOut } from 'lucide-react'
+import { usePathname, useRouter } from "next/navigation"
+import { Menu, LogOut } from "lucide-react"
 import { useState, useEffect } from "react"
 import { createClient } from "@/lib/supabase/client"
 import type { User } from "@supabase/supabase-js"
@@ -16,7 +16,7 @@ export function Navigation() {
 
   useEffect(() => {
     const supabase = createClient()
-    
+
     // Get initial user
     supabase.auth.getUser().then(({ data: { user } }) => {
       setUser(user)
@@ -24,7 +24,9 @@ export function Navigation() {
     })
 
     // Listen for auth changes
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((_event, session) => {
       setUser(session?.user ?? null)
     })
 
@@ -45,19 +47,42 @@ export function Navigation() {
     { href: "/about", label: "About" },
   ]
 
+  const getUserDisplayName = () => {
+    if (!user) return null
+    // Try to get username from user_metadata, fallback to email
+    const username = user.user_metadata?.username || user.user_metadata?.full_name
+    if (username) return username
+    // Fallback to email username (before @)
+    return user.email?.split("@")[0]
+  }
+
   return (
     <nav className="sticky top-0 z-50 bg-background border-b border-border">
       <div className="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
         <Link href="/" className="flex items-center gap-2 hover:opacity-80 transition-opacity">
           <div className="w-8 h-8 rounded-lg bg-accent/10 border border-accent/20 flex items-center justify-center">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M8.5 3L3 8.5V15.5L8.5 21H15.5L21 15.5V8.5L15.5 3H8.5Z" stroke="currentColor" strokeWidth="1.5" className="text-accent" fill="none"/>
-              <polyline points="7,17 10,14 13,16 17,12" stroke="currentColor" strokeWidth="1.5" className="text-accent" fill="none" strokeLinecap="round" strokeLinejoin="round"/>
+              <path
+                d="M8.5 3L3 8.5V15.5L8.5 21H15.5L21 15.5V8.5L15.5 3H8.5Z"
+                stroke="currentColor"
+                strokeWidth="1.5"
+                className="text-accent"
+                fill="none"
+              />
+              <polyline
+                points="7,17 10,14 13,16 17,12"
+                stroke="currentColor"
+                strokeWidth="1.5"
+                className="text-accent"
+                fill="none"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
             </svg>
           </div>
           <span className="font-bold text-foreground">Cagebot</span>
         </Link>
-        
+
         {/* Desktop Navigation */}
         <div className="hidden md:flex gap-6 items-center">
           {links.map((link) => (
@@ -78,7 +103,7 @@ export function Navigation() {
           <div className="hidden md:flex gap-3 items-center">
             {user ? (
               <>
-                <span className="text-sm text-muted-foreground">{user.email}</span>
+                <span className="text-sm text-foreground font-medium">{getUserDisplayName()}</span>
                 <button
                   onClick={handleLogout}
                   className="px-4 py-2 text-sm text-muted-foreground hover:text-foreground transition-colors flex items-center gap-2"
@@ -107,10 +132,7 @@ export function Navigation() {
         )}
 
         {/* Mobile Menu Button */}
-        <button
-          className="md:hidden text-foreground"
-          onClick={() => setIsOpen(!isOpen)}
-        >
+        <button className="md:hidden text-foreground" onClick={() => setIsOpen(!isOpen)}>
           <Menu className="w-6 h-6" />
         </button>
       </div>
@@ -133,7 +155,7 @@ export function Navigation() {
             <div className="border-t border-border pt-3 space-y-3">
               {user ? (
                 <>
-                  <span className="block text-sm text-muted-foreground px-4">{user.email}</span>
+                  <span className="block text-sm text-foreground font-medium px-4">{getUserDisplayName()}</span>
                   <button
                     onClick={handleLogout}
                     className="block w-full px-4 py-2 text-sm text-muted-foreground hover:text-foreground transition-colors text-left flex items-center gap-2"
