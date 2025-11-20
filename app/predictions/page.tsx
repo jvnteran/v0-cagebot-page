@@ -33,7 +33,12 @@ export default async function PredictionsPage() {
   events?.forEach((event, idx) => {
     console.log(`[v0] Event ${idx + 1}: ${event.name} - ${event.fights?.length || 0} fights`)
   })
-  // </CHANGE>
+
+  const filteredEvents = events?.filter((event) => event.name.includes("UFC 322")) || []
+  console.log("[v0] Filtered to UFC 322:", filteredEvents.length, "event(s)")
+  if (filteredEvents.length > 0) {
+    console.log("[v0] UFC 322 fight count:", filteredEvents[0].fights?.length || 0)
+  }
 
   return (
     <main className="min-h-screen bg-background">
@@ -45,8 +50,8 @@ export default async function PredictionsPage() {
         </div>
 
         <div className="space-y-12">
-          {events && events.length > 0 ? (
-            events.map((event) => <EventCard key={event.id} event={event} />)
+          {filteredEvents && filteredEvents.length > 0 ? (
+            filteredEvents.map((event) => <EventCard key={event.id} event={event} />)
           ) : (
             <div className="text-center py-12">
               <p className="text-muted-foreground text-lg">No events available yet.</p>
