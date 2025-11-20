@@ -64,6 +64,22 @@ export async function signUp(formData: FormData) {
       return { error: error.message }
     }
 
+    if (data.user) {
+      const { error: userError } = await supabase.from("users").insert({
+        id: data.user.id,
+        email,
+        username,
+        first_name: firstName,
+        last_name: lastName,
+        full_name: `${firstName} ${lastName}`,
+      })
+
+      if (userError) {
+        console.error("[v0] Failed to create user record:", userError)
+        // Note: User is still created in auth, just the public record failed
+      }
+    }
+
     // Check if email confirmation is required
     if (data?.user && !data?.session) {
       console.log("[v0] User created, email confirmation required")
