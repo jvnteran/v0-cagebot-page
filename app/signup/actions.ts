@@ -1,6 +1,7 @@
 "use server"
 
 import { createClient } from "@/lib/supabase/server"
+import { headers } from "next/headers"
 
 export async function signUp(formData: FormData) {
   const username = formData.get("username") as string
@@ -30,10 +31,17 @@ export async function signUp(formData: FormData) {
   try {
     const supabase = await createClient()
 
+    const headersList = await headers()
+    const host = headersList.get("host") || ""
+    const protocol = process.env.NODE_ENV === "development" ? "http" : "https"
+    const origin = `${protocol}://${host}`
+    const redirectTo = `${origin}/auth/callback`
+
     const { data, error } = await supabase.auth.signUp({
       email,
       password,
       options: {
+        emailRedirectTo: redirectTo,
         data: {
           username,
           first_name: firstName,
