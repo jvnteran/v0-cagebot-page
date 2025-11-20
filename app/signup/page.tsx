@@ -17,7 +17,7 @@ export default function SignupPage() {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    console.log("[v0] Form submitted") // Added debug log
+    console.log("[v0] Form submitted")
     setError("")
     setSuccess(false)
     setIsLoading(true)
@@ -25,7 +25,6 @@ export default function SignupPage() {
     try {
       const formData = new FormData(e.currentTarget)
       console.log("[v0] FormData created:", {
-        // Added debug log
         username: formData.get("username"),
         firstName: formData.get("firstName"),
         lastName: formData.get("lastName"),
@@ -33,19 +32,23 @@ export default function SignupPage() {
         hasPassword: !!formData.get("password"),
       })
 
-      console.log("[v0] Calling signUp action...") // Added debug log
+      console.log("[v0] Calling signUp action...")
       const result = await signUp(formData)
-      console.log("[v0] signUp action returned:", result) // Added debug log
+      console.log("[v0] signUp action returned:", result)
+      console.log("[v0] Result stringified:", JSON.stringify(result, null, 2))
 
       if (result?.error) {
-        console.log("[v0] Signup error:", result.error) // Added debug log
+        console.log("[v0] Signup error:", result.error)
         setError(result.error)
       } else if (result?.success) {
-        console.log("[v0] Signup successful!") // Added debug log
+        console.log("[v0] Signup successful!")
         setSuccess(true)
+      } else {
+        console.log("[v0] Unexpected result format - no success or error flag")
+        setError("Unexpected response from server")
       }
     } catch (err: any) {
-      console.log("[v0] Signup exception:", err) // Added debug log
+      console.log("[v0] Signup exception:", err)
       setError(err.message || "Failed to create account. Please try again.")
     } finally {
       setIsLoading(false)
