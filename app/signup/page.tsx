@@ -4,7 +4,6 @@ import type React from "react"
 
 import { useState } from "react"
 import Link from "next/link"
-import { useRouter } from "next/navigation"
 import { Navigation } from "@/components/navigation"
 import { Footer } from "@/components/footer"
 import { Mail, Lock, User, ArrowRight, UserCircle } from "lucide-react"
@@ -12,13 +11,14 @@ import { signUp } from "./actions"
 import { createClient } from "@/lib/supabase/client"
 
 export default function SignupPage() {
-  const router = useRouter()
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState("")
+  const [success, setSuccess] = useState(false)
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     setError("")
+    setSuccess(false)
     setIsLoading(true)
 
     try {
@@ -27,12 +27,13 @@ export default function SignupPage() {
 
       if (result?.error) {
         setError(result.error)
-        setIsLoading(false)
-      } else if (result?.success && result?.redirectTo) {
-        router.push(result.redirectTo)
+      } else if (result?.success) {
+        setSuccess(true)
       }
     } catch (err: any) {
+      console.log("[v0] Signup error:", err)
       setError(err.message || "Failed to create account. Please try again.")
+    } finally {
       setIsLoading(false)
     }
   }
@@ -208,13 +209,26 @@ export default function SignupPage() {
 
               {error && <div className="text-sm text-red-400 bg-red-400/10 p-3 rounded-lg">{error}</div>}
 
+              {success && (
+                <div className="text-sm text-accent bg-accent/10 p-3 rounded-lg">
+                  <p className="font-semibold mb-1">Account created successfully!</p>
+                  <p className="text-xs text-muted-foreground">
+                    Check your email to confirm your account, then{" "}
+                    <Link href="/login" className="text-accent hover:underline">
+                      sign in here
+                    </Link>
+                    .
+                  </p>
+                </div>
+              )}
+
               <button
                 type="submit"
-                disabled={isLoading}
+                disabled={isLoading || success}
                 className="w-full py-3 bg-accent text-background font-semibold rounded-lg hover:opacity-90 transition-opacity disabled:opacity-50 flex items-center justify-center gap-2"
               >
-                {isLoading ? "Creating account..." : "Create Account"}
-                {!isLoading && <ArrowRight className="w-4 h-4" />}
+                {isLoading ? "Creating account..." : success ? "Account Created!" : "Create Account"}
+                {!isLoading && !success && <ArrowRight className="w-4 h-4" />}
               </button>
             </form>
 

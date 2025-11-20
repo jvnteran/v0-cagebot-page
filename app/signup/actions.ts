@@ -49,11 +49,11 @@ export async function signUp(formData: FormData) {
 
     // Check if email confirmation is required
     if (data?.user && !data?.session) {
-      return { success: true, redirectTo: "/auth/signup-success" }
+      return { success: true, requiresConfirmation: true }
     }
 
     // User is signed in immediately
-    return { success: true, redirectTo: "/predictions" }
+    return { success: true, requiresConfirmation: false }
   } catch (error: any) {
     return { error: error.message || "An unexpected error occurred" }
   }
