@@ -141,10 +141,41 @@ export function UFCFightCard({ fight, fightNumber }: UFCFightCardProps) {
           {/* Confidence */}
           <div className="card-elevated p-3 transition-all duration-300 hover:shadow-lg hover:scale-105">
             <div className="text-xs text-muted-foreground mb-1 uppercase tracking-wide">Confidence</div>
-            <div
-              className={`text-lg font-mono font-bold ${hasConfidence ? getConfidenceColor(confidence) : "text-muted-foreground"}`}
-            >
-              {confidenceLabel}
+            <div className="flex items-center justify-between gap-2">
+              <div
+                className={`text-lg font-mono font-bold ${hasConfidence ? getConfidenceColor(confidence) : "text-muted-foreground"}`}
+              >
+                {confidenceLabel}
+              </div>
+              {hasConfidence && (
+                <div className="relative h-10 w-10 flex-shrink-0">
+                  <svg className="transform -rotate-90" viewBox="0 0 36 36">
+                    <circle
+                      cx="18"
+                      cy="18"
+                      r="16"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="3"
+                      className="text-muted/20"
+                    />
+                    <circle
+                      cx="18"
+                      cy="18"
+                      r="16"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="3"
+                      strokeDasharray={`${2 * Math.PI * 16}`}
+                      strokeDashoffset={`${2 * Math.PI * 16 * (1 - confidence / 100)}`}
+                      className={`transition-all duration-500 ${
+                        confidence >= 70 ? "text-success" : confidence >= 60 ? "text-warning" : "text-danger"
+                      }`}
+                      strokeLinecap="round"
+                    />
+                  </svg>
+                </div>
+              )}
             </div>
             <div className="mt-2 h-1.5 bg-secondary rounded-full overflow-hidden">
               <div

@@ -29,6 +29,12 @@ export default async function PredictionsPage() {
     console.error("[v0] Error fetching events:", error)
   }
 
+  console.log("[v0] Total events fetched:", events?.length || 0)
+  events?.forEach((event, idx) => {
+    console.log(`[v0] Event ${idx + 1}: ${event.name} - ${event.fights?.length || 0} fights`)
+  })
+  // </CHANGE>
+
   return (
     <main className="min-h-screen bg-background">
       <Navigation />
